@@ -1,0 +1,36 @@
+<svg width="144" height="143" viewBox="0 0 144 143" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0.5" width="143" height="143" rx="12.2353" fill="black" fill-opacity="0.2" />
+    <foreignObject x="25.8836" y="46.5059" width="86.8797" height="83.6353">
+        <div xmlns="http://www.w3.org/1999/xhtml"
+            style="backdrop-filter:blur(2.68px);clip-path:url(#bgblur_0_58_254_clip_path);height:100%;width:100%"></div>
+    </foreignObject>
+    <rect data-figma-bg-blur-radius="5.35294" x="29.1765" y="67.0178" width="66.5294"
+        height="61.9412" rx="9.17647" transform="rotate(-15 29.1765 67.0178)" fill="white"
+        fill-opacity="0.9" />
+    <foreignObject x="40.6471" y="28.294" width="77.2353" height="72.647">
+        <div xmlns="http://www.w3.org/1999/xhtml"
+            style="backdrop-filter:blur(2.68px);clip-path:url(#bgblur_1_58_254_clip_path);height:100%;width:100%"></div>
+    </foreignObject>
+    <rect data-figma-bg-blur-radius="5.35294" x="46" y="33.647" width="66.5294" height="61.9412"
+        rx="9.17647" fill="white" fill-opacity="0.9" />
+    <foreignObject x="28.9424" y="38.859" width="86.8797" height="83.6353">
+        <div xmlns="http://www.w3.org/1999/xhtml"
+            style="backdrop-filter:blur(2.68px);clip-path:url(#bgblur_2_58_254_clip_path);height:100%;width:100%"></div>
+    </foreignObject>
+    <rect data-figma-bg-blur-radius="5.35294" x="48.2668" y="42.1519" width="66.5294"
+        height="61.9412" rx="9.17647" transform="rotate(15 48.2668 42.1519)" fill="white"
+        fill-opacity="0.9" />
+    <defs>
+        <clipPath id="bgblur_0_58_254_clip_path" transform="translate(-25.8836 -46.5059)">
+            <rect x="29.1765" y="67.0178" width="66.5294" height="61.9412" rx="9.17647"
+                transform="rotate(-15 29.1765 67.0178)" />
+        </clipPath>
+        <clipPath id="bgblur_1_58_254_clip_path" transform="translate(-40.6471 -28.294)">
+            <rect x="46" y="33.647" width="66.5294" height="61.9412" rx="9.17647" />
+        </clipPath>
+        <clipPath id="bgblur_2_58_254_clip_path" transform="translate(-28.9424 -38.859)">
+            <rect x="48.2668" y="42.1519" width="66.5294" height="61.9412" rx="9.17647"
+                transform="rotate(15 48.2668 42.1519)" />
+        </clipPath>
+    </defs>
+</svg>
