@@ -44,7 +44,7 @@ export default function () {
     figma.on("selectionchange", () => {
       run();
     });
-    console.log("textData", textData);
+    console.log("textData3", textData);
 
     // Send data to the UI
     figma.ui.postMessage({

@@ -360,6 +360,7 @@ const App = () => {
           </div>
         </div>
       )}
+
       {step == 4 && (
         <div className="step-3">
           <div
