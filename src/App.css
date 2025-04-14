@@ -91,6 +91,7 @@ body {
 .container .right-column .choices .choice {
   display: flex;
   flex-direction: row;
+  align-items: center;
   padding: 8px;
   justify-content: space-between;
   border-radius: 3px;
@@ -128,6 +129,11 @@ body {
   white-space: nowrap;
 }
 
+.container-desc {
+  display: flex;
+  flex-direction: column;
+}
+
 .choice span#small-description {
   font-size: 9px;
   font-weight: 300;
@@ -142,11 +148,14 @@ body {
   justify-content: center;
   align-items: center;
   gap: 8px;
+  font-size: 8px;
+  background-color: var(--grey);
   border-radius: 2px;
-  background: var(--grey);
+  color: black;
 }
 .container .right-column .choices .choice .chip.pro {
   background: var(--pro);
+  color: black;
 }
 
 .container .right-column .footer-button {
@@ -387,11 +396,17 @@ input {
   color: white;
 }
 
+.step-4 .content {
+  position: relative;
+  height: 100%;
+  padding: 8px;
+}
+
 .input-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 16px;
 }
 .input-group:last-child {
   margin-bottom: 8px;

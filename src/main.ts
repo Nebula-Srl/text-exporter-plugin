@@ -17,7 +17,13 @@ export default function () {
       const frameText: Record<string, string> = {}; // Store text inside this board
       function findTextLayers(node: SceneNode) {
         if (node.type === "TEXT") {
-          const textKey = formatKey(node.name); // Convert text name to underscore format
+          let textKey = formatKey(node.name); // Convert text name to underscore format
+          // if frameText already has this key, append a number to it
+          let i = 1;
+          while (frameText[textKey]) {
+            textKey = `${formatKey(node.name)}_${i}`;
+            i++;
+          }
           frameText[textKey] = (node as TextNode).characters;
         }
         if ("children" in node) {
@@ -33,7 +39,6 @@ export default function () {
 
     // Process all top-level frames (boards)
     figma.currentPage.selection.forEach((node) => {
-      console.log("Node Type:", node.type);
       if (node.type === "FRAME" && node.visible) {
         frames.push(node.name);
         processFrame(node);
@@ -44,8 +49,6 @@ export default function () {
     figma.on("selectionchange", () => {
       run();
     });
-    console.log("textData3", textData);
-
     // Send data to the UI
     figma.ui.postMessage({
       type: "export",
