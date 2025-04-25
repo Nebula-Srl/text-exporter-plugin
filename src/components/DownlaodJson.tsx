@@ -10,7 +10,9 @@ const DownloadJson = ({
 }: DownloadJsonProps) => {
   const downloadJson = () => {
     const element = document.createElement("a");
-    const file = new Blob([enhancedResult], { type: "application/json" });
+    const file = new Blob([JSON.stringify(enhancedResult, null, 2)], {
+      type: "application/json",
+    });
     element.href = URL.createObjectURL(file);
     element.download = "extracted-text.json";
     document.body.appendChild(element); // Required for this to work in FireFox

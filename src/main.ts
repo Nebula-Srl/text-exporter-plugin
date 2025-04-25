@@ -57,4 +57,23 @@ export default function () {
     });
   };
   run();
+
+  figma.ui.onmessage = async (msg) => {
+    if (msg.type === "getStorage") {
+      const value = await figma.clientStorage.getAsync(msg.key);
+      figma.ui.postMessage({
+        type: "storageValue",
+        key: msg.key,
+        value,
+      });
+    }
+
+    if (msg.type === "setStorage") {
+      await figma.clientStorage.setAsync(msg.key, msg.value);
+    }
+
+    if (msg.type === "deleteStorage") {
+      await figma.clientStorage.deleteAsync(msg.key);
+    }
+  };
 }

@@ -21,8 +21,8 @@ const SelectArtboards = ({ artworkList, setStep }: SelectArtboardsProps) => {
           <strong>Extract, Optimize, Traduct</strong>
         </p>
         <p>
-          Please select the artboards containing the texts you want to extract
-          and translate
+          Please select the frames containing the texts you want to extract and
+          translate
         </p>
         <button
           className="btn"
@@ -38,13 +38,13 @@ const SelectArtboards = ({ artworkList, setStep }: SelectArtboardsProps) => {
         </button>
         {!showError && (
           <p>
-            <strong>{artworkList?.length} selected</strong>
+            <strong>{artworkList?.length} frames selected</strong>
           </p>
         )}
 
         {!artworkList?.length && showError && (
           <div className="error-banner">
-            Select at least one artboard to proceed
+            Select at least one frame to proceed
           </div>
         )}
       </div>

@@ -20,7 +20,7 @@ const ChoiceInput = ({
     <div
       key={index}
       onClick={() => setSelectedChoice(choice.id)}
-      className={`choice ${choice.id === selectedChoice ? " active" : ""}`}
+      className={`choice ${choice.id === selectedChoice ? " active" : ""} ${choice.description ? "with-description" : ""}`}
     >
       {!choice.description ? (
         <div>

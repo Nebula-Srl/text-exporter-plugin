@@ -45,7 +45,7 @@ const JoinPro = ({ setIsLoading, setStep }: JoinProProps) => {
           Enter the Key and access <span>PRO features</span>
         </h2>
         <span>
-          With the Pro version, you can extract text from artboards with over 50
+          With the Pro version, you can extract text from frames with over 50
           lines of code and access powerful automatic translation features.
         </span>
         <div className="input-container">
