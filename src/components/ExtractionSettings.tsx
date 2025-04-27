@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import ChoiceInput, { Choice } from "./ChoiceInput";
 import artboardImg from "../assets/artboard.svg";
 import { Storage } from "../storage";
-
+import arrowLeft from "../assets/arrow-left.svg";
+import settings from "../assets/settings.svg";
+import reportBug from "../assets/bug-report-icon.svg";
 interface ExtractionSettingsProps {
   artworkList: any[];
   setLoaderText: Function;
@@ -10,6 +12,7 @@ interface ExtractionSettingsProps {
   setStep: Function;
   jsonOutput: string;
   setEnhancedResult: Function;
+  setLimitExceed: Function;
 }
 const choices = [
   {
@@ -38,6 +41,7 @@ const ExtractionSettings = ({
   setStep,
   jsonOutput,
   setEnhancedResult,
+  setLimitExceed,
 }: ExtractionSettingsProps) => {
   const [selectedChoice, setSelectedChoice] = useState(0);
   const [optimize, setOptimize] = useState(false);
@@ -85,7 +89,7 @@ const ExtractionSettings = ({
       selectedChoice === 1 ? "Extracting..." : "Extracting and Translating..."
     );
     setIsLoading(true);
-
+    debugger;
     if (!userKey && selectedChoice !== 1) {
       setStep(3);
       setIsLoading(false);
@@ -97,6 +101,7 @@ const ExtractionSettings = ({
       let keysCount = countKeys(JSON.parse(jsonOutput));
       if (keysCount > 50) {
         setStep(3);
+        setLimitExceed(true);
         setIsLoading(false);
         return;
       }
@@ -147,86 +152,103 @@ const ExtractionSettings = ({
     if (selectedChoice) setError(null);
   }, [selectedChoice]);
   return (
-    <div className="container extraction-settings">
-      <div className="left-column">
-        <button
-          onClick={() => {
-            window.localStorage.removeItem("user_key");
-          }}
-        >
-          Reset user_key
-        </button>
-        <h2>{artworkList?.length} Frame to extract</h2>
-        <div id="artwork-list">
-          {artworkList?.map((artwork, index) => (
-            <div key={index} className="artwork">
-              <img src={artboardImg} />
-              <span>{artwork}</span>
+    <div
+      style={{
+        minHeight: "100%",
+      }}
+    >
+      <div className="back-header">
+        <div className="back-header-content" onClick={() => setStep(0)}>
+          <img src={arrowLeft} alt="Back" />
+          <span>Go Back</span>
+        </div>
+        <div className="right-header-content">
+          {userKey && (
+            <div className="settings-content" onClick={() => setStep(6)}>
+              <img src={settings} alt="Settings" />
+              <span>Manage Key</span>
             </div>
-          ))}
+          )}
+
+          <a href="mailto:info@explorenebula.com" target="_blank">
+            <img src={reportBug} alt="Report bug" width={16} />
+          </a>
         </div>
       </div>
-      <div className="right-column">
-        <div className="options-container">
-          <h2>Select an option</h2>
-          <div className="choices">
-            {choices.map((choice: Choice, index: number) => (
-              <ChoiceInput
-                choice={choice}
-                index={index}
-                key={index}
-                setSelectedChoice={setSelectedChoice}
-                selectedChoice={selectedChoice}
-              />
+      <div className="container extraction-settings">
+        <div className="left-column">
+          <h2>{artworkList?.length} Frame to extract</h2>
+          <div id="artwork-list">
+            {artworkList?.map((artwork, index) => (
+              <div key={index} className="artwork">
+                <img src={artboardImg} />
+                <span>{artwork}</span>
+              </div>
             ))}
           </div>
         </div>
-        <div className="optimize-container">
-          <span>
-            Exclude numbers from extracted text (useful for dates, IDs, etc.)
-          </span>
-          <div>
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={optimize}
-                onChange={(e) => {
-                  setOptimize(e.target.checked);
-                }}
-              />
-              <span className="slider round"></span>
-            </label>
+        <div className="right-column">
+          <div className="options-container">
+            <h2>Select an option</h2>
+            <div className="choices">
+              {choices.map((choice: Choice, index: number) => (
+                <ChoiceInput
+                  choice={choice}
+                  index={index}
+                  key={index}
+                  setSelectedChoice={setSelectedChoice}
+                  selectedChoice={selectedChoice}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div
-          className="language-container"
-          style={{
-            opacity: selectedChoice === 3 ? 1 : 0.2,
-          }}
-        >
-          <h2>Which language to translate?</h2>
-          <select
-            className="select"
-            value={translations}
-            onChange={(e) => {
-              setTranslations([e.target.value]);
+          <div className="optimize-container">
+            <span>
+              Exclude numbers from extracted text (useful for dates, IDs, etc.)
+            </span>
+            <div>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={optimize}
+                  onChange={(e) => {
+                    setOptimize(e.target.checked);
+                  }}
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div
+            className="language-container"
+            style={{
+              opacity: selectedChoice === 3 ? 1 : 0.2,
             }}
           >
-            <option value="english">English</option>
-            <option value="spanish">Spanish</option>
-          </select>
-        </div>
-        <div className="footer-button">
-          {error && <div className="toast-error">{error}</div>}
-          {/* <pre id="json-output">{jsonOutput}</pre> */}
-          <button
-            id="start-extraction"
-            onClick={() => {
-              startExtraction();
-            }}
-          >
-            Start extraction process
-          </button>
+            <h2>Which language to translate?</h2>
+            <select
+              className="select"
+              value={translations}
+              onChange={(e) => {
+                setTranslations([e.target.value]);
+              }}
+            >
+              <option value="english">English</option>
+              <option value="spanish">Spanish</option>
+            </select>
+          </div>
+          <div className="footer-button">
+            {error && <div className="toast-error">{error}</div>}
+            {/* <pre id="json-output">{jsonOutput}</pre> */}
+            <button
+              id="start-extraction"
+              onClick={() => {
+                startExtraction();
+              }}
+            >
+              Start extraction process
+            </button>
+          </div>
         </div>
       </div>
     </div>

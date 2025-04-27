@@ -19,8 +19,10 @@ const SubscribeWaitlist = ({
           setStep(1);
         }}
       >
-        <img src={arrowLeft} alt="Back" />
-        <span>Go Back</span>
+        <div className="back-header-content">
+          <img src={arrowLeft} alt="Back" />
+          <span>Go Back</span>
+        </div>
       </div>
 
       <div className="content content-center">

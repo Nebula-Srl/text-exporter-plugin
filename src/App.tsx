@@ -9,6 +9,7 @@ import JoinPro from "./components/JoinPro";
 import DownloadJson from "./components/DownlaodJson";
 import SelectArtboards from "./components/SelectArtboards";
 import ExtractionSettings from "./components/ExtractionSettings";
+import Settings from "./components/Settings";
 const App = () => {
   const [artworkList, setArtworkList] = useState([]);
   const [jsonOutput, setJsonOutput] = useState("Waiting for data...");
@@ -18,6 +19,8 @@ const App = () => {
   const [loaderText, setLoaderText] = useState<string>(
     "Extracting and Translating..."
   );
+  const [limitExceed, setLimitExceed] = useState(false);
+
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       const message = event.data.pluginMessage;
@@ -46,6 +49,7 @@ const App = () => {
           setStep={setStep}
           jsonOutput={jsonOutput}
           setEnhancedResult={setEnhancedResult}
+          setLimitExceed={setLimitExceed}
         />
       )}
       {step == 2 && (
@@ -55,7 +59,13 @@ const App = () => {
           setIsLoading={setIsLoading}
         />
       )}
-      {step == 3 && <JoinPro setIsLoading={setIsLoading} setStep={setStep} />}
+      {step == 3 && (
+        <JoinPro
+          setIsLoading={setIsLoading}
+          setStep={setStep}
+          limitExceed={limitExceed}
+        />
+      )}
       {step == 4 && (
         <JoinWaitlist setIsLoading={setIsLoading} setStep={setStep} />
       )}
@@ -63,6 +73,8 @@ const App = () => {
       {step == 5 && (
         <SubscribeWaitlist setIsLoading={setIsLoading} setStep={setStep} />
       )}
+
+      {step == 6 && <Settings setStep={setStep} />}
     </>
   );
 };

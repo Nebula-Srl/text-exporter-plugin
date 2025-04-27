@@ -10,7 +10,6 @@ body {
   gap: 8px;
   flex: 1 0 0;
   align-self: stretch;
-  height: 100%;
 }
 
 .container .left-column {
@@ -23,7 +22,6 @@ body {
   align-items: flex-start;
   gap: 16px;
   align-self: stretch;
-  min-height: 100%;
 }
 
 .container .left-column h2 {
@@ -152,8 +150,8 @@ body {
 .container .right-column .footer-button {
   flex: 1;
   display: flex;
-  align-items: flex-end;
   width: 100%;
+  margin-top: 12px;
 }
 
 button {
@@ -268,6 +266,8 @@ input:checked + .slider:before {
   flex-direction: column;
   gap: 24px;
   align-items: center;
+  margin-top: 26px;
+  padding: 0px 16px;
 }
 .select-artboard h1 {
   font-size: 16px;
@@ -306,6 +306,7 @@ input:checked + .slider:before {
 .back-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 4px;
   width: 100%;
   padding: 12px 16px;
@@ -313,9 +314,27 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
+.back-header .right-header-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .back-header span {
   font-size: 11px;
   font-weight: medium;
+}
+
+.back-header .back-header-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.back-header .settings-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .step-3 {
@@ -433,6 +452,10 @@ button.btn {
   padding-right: 20px;
 }
 
+.extraction-settings {
+  min-height: 90%;
+}
+
 .extraction-settings .right-column {
   position: relative;
 }
@@ -460,6 +483,48 @@ button.btn {
   animation: spin 2s linear infinite;
 }
 
+.settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.settings .settings-content {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 12px;
+}
+
+.settings-title {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+button.remove-key {
+  background: white;
+  border: none;
+  color: black;
+  font-size: 12px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.limit-exceed {
+  display: flex;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 6px;
+  background: #830000;
+  margin-top: -12px;
+  margin-bottom: 11px;
+}
 /* Safari */
 @-webkit-keyframes spin {
   0% {

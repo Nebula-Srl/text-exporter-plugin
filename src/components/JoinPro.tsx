@@ -1,12 +1,14 @@
 import { useState } from "react";
 import arrowLeft from "../assets/arrow-left.svg";
-import emptyImg from "../assets/empty_img.png";
+import joinPro from "../assets/join-pro.svg";
+import joinProLimit from "../assets/join-pro-limit.svg";
 
 interface JoinProProps {
   setIsLoading: Function;
   setStep: Function;
+  limitExceed?: boolean;
 }
-const JoinPro = ({ setIsLoading, setStep }: JoinProProps) => {
+const JoinPro = ({ setIsLoading, setStep, limitExceed }: JoinProProps) => {
   const [key, setKey] = useState("");
 
   const enableKey = async () => {
@@ -36,11 +38,18 @@ const JoinPro = ({ setIsLoading, setStep }: JoinProProps) => {
           setStep(1);
         }}
       >
-        <img src={arrowLeft} alt="Back" />
-        <span>Go Back</span>
+        <div className="back-header-content">
+          <img src={arrowLeft} alt="Back" />
+          <span>Go Back</span>
+        </div>
       </div>
       <div className="content">
-        <img src={emptyImg} height={103} />
+        {limitExceed ? <img src={joinProLimit} /> : <img src={joinPro} />}
+        {limitExceed && (
+          <div className="limit-exceed">
+            The extraction exceeds the 200-line limit of the free plan
+          </div>
+        )}
         <h2>
           Enter the Key and access <span>PRO features</span>
         </h2>
