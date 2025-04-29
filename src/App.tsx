@@ -66,9 +66,7 @@ const App = () => {
           limitExceed={limitExceed}
         />
       )}
-      {step == 4 && (
-        <JoinWaitlist setIsLoading={setIsLoading} setStep={setStep} />
-      )}
+      {step == 4 && <JoinWaitlist setStep={setStep} />}
 
       {step == 5 && (
         <SubscribeWaitlist setIsLoading={setIsLoading} setStep={setStep} />

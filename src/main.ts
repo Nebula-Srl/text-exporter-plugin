@@ -53,9 +53,42 @@ export default function () {
       }
     });
 
+    let selectedFrames: string[] = [];
+    let debounceTimer: number | undefined | NodeJS.Timeout;
+
     // Add listener on new selection
     figma.on("selectionchange", () => {
-      run();
+      const elaborateFrames = () => {
+        const selection = figma.currentPage.selection;
+
+        if (selection.length === 0) {
+          run();
+          return;
+        }
+        const newSelectedFrames: string[] = [];
+        for (const node of selection) {
+          if (node.type === "FRAME" && node.visible) {
+            newSelectedFrames.push(node.id);
+          }
+        }
+
+        // Check if the new selection is different from the previous one
+        if (
+          JSON.stringify(newSelectedFrames) !== JSON.stringify(selectedFrames)
+        ) {
+          selectedFrames = newSelectedFrames;
+          console.log("Selected frames changed:", selectedFrames);
+          run();
+        }
+      };
+      if (debounceTimer) {
+        console.log("Clearing debounce timer");
+        clearTimeout(debounceTimer);
+      }
+      debounceTimer = setTimeout(() => {
+        console.log("Debounce timer expired, running elaborateFrames");
+        elaborateFrames();
+      }, 2000); // adjust delay as needed (ms)
     });
     // Send data to the UI
     figma.ui.postMessage({

@@ -1,12 +1,11 @@
 import { useState } from "react";
-import arrowLeft from "../assets/arrow-left.svg";
+import TopBar from "./TopBar";
 
 interface JoinWaitlistProps {
-  setIsLoading: Function;
   setStep: Function;
 }
 
-const JoinWaitlist = ({ setIsLoading, setStep }: JoinWaitlistProps) => {
+const JoinWaitlist = ({ setStep }: JoinWaitlistProps) => {
   const [whitelistForm, setWhitelistForm] = useState({
     fullName: "",
     email: "",
@@ -44,79 +43,83 @@ const JoinWaitlist = ({ setIsLoading, setStep }: JoinWaitlistProps) => {
 
   return (
     <div className="step-4">
-      <div
-        className="back-header"
-        onClick={() => {
-          setIsLoading(false);
-          setStep(3);
-        }}
-      >
-        <div className="back-header-content">
-          <img src={arrowLeft} alt="Back" />
-          <span>Go Back</span>
-        </div>
-      </div>
+      <TopBar hideManage setStep={setStep} showGoBack oldStep={3} />
 
       <div className="content">
-        <h2>Join our community</h2>
-        <span>
+        <span className="ds-font-default ds-font-emphatized">
+          Join our community
+        </span>
+        <span className="ds-font-default">
           Subscribe and we will send you a free key, so that you will be able to
           try our plugin!
         </span>
-        <div className="input-group">
-          <label htmlFor="full-name">Full Name</label>
-          <input
-            type="email"
-            id="full-name"
-            placeholder="Full Name..."
-            value={whitelistForm.fullName}
-            onChange={(e) => {
-              setWhitelistForm({
-                ...whitelistForm,
-                fullName: e.target.value,
-              });
-            }}
-          />
-        </div>
+        <div className="form-container">
+          <div className="input-group">
+            <label
+              htmlFor="full-name"
+              className="ds-font-small ds-font-emphatized"
+            >
+              Full Name
+            </label>
+            <input
+              type="email"
+              id="full-name"
+              placeholder="Full Name..."
+              value={whitelistForm.fullName}
+              onChange={(e) => {
+                setWhitelistForm({
+                  ...whitelistForm,
+                  fullName: e.target.value,
+                });
+              }}
+            />
+          </div>
 
-        <div className="input-group">
-          <label htmlFor="email">Email</label>
-          <input
-            className="input"
-            type="email"
-            id="email"
-            placeholder="Email..."
-            value={whitelistForm.email}
-            onChange={(e) => {
-              setWhitelistForm({ ...whitelistForm, email: e.target.value });
-            }}
-          />
-        </div>
+          <div className="input-group">
+            <label htmlFor="email" className="ds-font-small ds-font-emphatized">
+              Email
+            </label>
+            <input
+              className="input"
+              type="email"
+              id="email"
+              placeholder="Email..."
+              value={whitelistForm.email}
+              onChange={(e) => {
+                setWhitelistForm({ ...whitelistForm, email: e.target.value });
+              }}
+            />
+          </div>
 
-        <div className="input-group">
-          <label htmlFor="role">Role</label>
-          <select
-            value={whitelistForm.role}
-            id="role"
-            onChange={(e) => {
-              setWhitelistForm({ ...whitelistForm, role: e.target.value });
+          <div className="input-group">
+            <label htmlFor="role" className="ds-font-small ds-font-emphatized">
+              Role
+            </label>
+            <select
+              value={whitelistForm.role}
+              id="role"
+              onChange={(e) => {
+                setWhitelistForm({ ...whitelistForm, role: e.target.value });
+              }}
+            >
+              <option value="">Select an option</option>
+              <option value="designer">Designer</option>
+              <option value="developer">Developer</option>
+              <option value="product-manager">Product Manager</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div className="btn-container">
+          <button
+            className="btn"
+            onClick={() => {
+              subscribeToWhitelist();
             }}
           >
-            <option value="">Select an option</option>
-            <option value="designer">Designer</option>
-            <option value="developer">Developer</option>
-            <option value="product-manager">Product Manager</option>
-            <option value="other">Other</option>
-          </select>
+            Sign up and request key
+          </button>
         </div>
-        <button
-          className="btn"
-          onClick={() => {
-            subscribeToWhitelist();
-          }}
-        >
-          Join Whitelist
-        </button>
       </div>
     </div>
   );

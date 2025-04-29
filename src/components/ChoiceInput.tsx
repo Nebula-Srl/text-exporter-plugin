@@ -28,8 +28,10 @@ const ChoiceInput = ({
         </div>
       ) : (
         <div className="container-desc">
-          <span>{choice.name}</span>
-          <span id="small-description">{choice.description}</span>
+          <span className="ds-font-small">{choice.name}</span>
+          <span className="ds-font-extra-small ds-font-grey">
+            {choice.description}
+          </span>
         </div>
       )}
       <div className={`chip ${choice.price.toLowerCase()}`}>{choice.price}</div>

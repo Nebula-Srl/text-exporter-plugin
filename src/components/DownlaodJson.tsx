@@ -23,7 +23,9 @@ const DownloadJson = ({
   };
   return (
     <div className="final-container">
-      <h2>Your file is ready!</h2>
+      <span className="ds-font-default ds-font-emphatized">
+        Your file is ready!
+      </span>
       <button
         onClick={() => {
           downloadJson();

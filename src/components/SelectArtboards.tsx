@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import selectArtboardImg from "../assets/select_arboard.svg";
+import selectArtboardImg from "../assets/frame_extractor.png";
+import TopBar from "./TopBar";
 interface SelectArtboardsProps {
   setStep: Function;
   artworkList: any[];
@@ -13,40 +14,45 @@ const SelectArtboards = ({ artworkList, setStep }: SelectArtboardsProps) => {
     }
   }, [artworkList]);
   return (
-    <div className="container select-artboard">
-      <h1>Welcome to Extract and Translate</h1>
-      <img src={selectArtboardImg} width={143} height={143} />
-      <div className="info">
-        <p>
-          <strong>Extract, Optimize, Traduct</strong>
-        </p>
-        <p>
-          Please select the frames containing the texts you want to extract and
-          translate
-        </p>
-        <button
-          className="btn"
-          onClick={() => {
-            if (!artworkList?.length) {
-              setShowError(true);
-              return;
-            }
-            setStep(1);
-          }}
-        >
-          Start now
-        </button>
-        {!showError && (
-          <p>
-            <strong>{artworkList?.length} frames selected</strong>
-          </p>
-        )}
-
-        {!artworkList?.length && showError && (
-          <div className="error-banner">
-            Select at least one frame to proceed
+    <div className="select-artboard">
+      <TopBar setStep={setStep} />
+      <div className="select-artboard__content">
+        <img src={selectArtboardImg} width={120} height={120} />
+        <div className="info">
+          <div className="info__text">
+            <span className="ds-font-default ds-font-emphatized">
+              Extract, Optimize, Translate
+            </span>
+            <span className="ds-font-default">
+              Please select the frames containing the texts you want to extract
+              and translate
+            </span>
           </div>
-        )}
+          <div className="info__actions">
+            <button
+              className="btn"
+              onClick={() => {
+                if (!artworkList?.length) {
+                  setShowError(true);
+                  return;
+                }
+                setStep(1);
+              }}
+            >
+              Start now
+            </button>
+
+            <span className="ds-font-small">
+              {artworkList?.length} frames selected
+            </span>
+
+            {!artworkList?.length && showError && (
+              <div className="error-banner">
+                Select at least one frame to proceed
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

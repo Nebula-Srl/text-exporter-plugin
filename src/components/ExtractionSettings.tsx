@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import ChoiceInput, { Choice } from "./ChoiceInput";
-import artboardImg from "../assets/artboard.svg";
 import { Storage } from "../storage";
-import arrowLeft from "../assets/arrow-left.svg";
-import settings from "../assets/settings.svg";
-import reportBug from "../assets/bug-report-icon.svg";
+import artboardIcon from "../assets/artboard.svg";
+import TopBar from "./TopBar";
 interface ExtractionSettingsProps {
   artworkList: any[];
   setLoaderText: Function;
@@ -17,13 +15,13 @@ interface ExtractionSettingsProps {
 const choices = [
   {
     id: 1,
-    name: "Extraction max 50 lines",
+    name: "Extract up to 200 lines",
     price: "FREE",
     description: "",
   },
   {
     id: 2,
-    name: "Extraction unlimited lines",
+    name: "Unlimited text extraction",
     price: "PRO",
     description: "",
   },
@@ -89,7 +87,7 @@ const ExtractionSettings = ({
       selectedChoice === 1 ? "Extracting..." : "Extracting and Translating..."
     );
     setIsLoading(true);
-    debugger;
+
     if (!userKey && selectedChoice !== 1) {
       setStep(3);
       setIsLoading(false);
@@ -115,11 +113,13 @@ const ExtractionSettings = ({
             optimize,
             translations,
           }),
+
           method: "POST",
           headers: {
             "x-user-key": String(userKey),
             "x-choice": String(selectedChoice),
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
         }
       );
@@ -157,31 +157,16 @@ const ExtractionSettings = ({
         minHeight: "100%",
       }}
     >
-      <div className="back-header">
-        <div className="back-header-content" onClick={() => setStep(0)}>
-          <img src={arrowLeft} alt="Back" />
-          <span>Go Back</span>
-        </div>
-        <div className="right-header-content">
-          {userKey && (
-            <div className="settings-content" onClick={() => setStep(6)}>
-              <img src={settings} alt="Settings" />
-              <span>Manage Key</span>
-            </div>
-          )}
-
-          <a href="mailto:info@explorenebula.com" target="_blank">
-            <img src={reportBug} alt="Report bug" width={16} />
-          </a>
-        </div>
-      </div>
-      <div className="container extraction-settings">
+      <TopBar setStep={setStep} showGoBack />
+      <div className="extraction-settings">
         <div className="left-column">
-          <h2>{artworkList?.length} Frame to extract</h2>
+          <span className="ds-font-default ds-font-emphatized">
+            {artworkList?.length} Frame to extract
+          </span>
           <div id="artwork-list">
             {artworkList?.map((artwork, index) => (
               <div key={index} className="artwork">
-                <img src={artboardImg} />
+                <img src={artboardIcon} />
                 <span>{artwork}</span>
               </div>
             ))}
@@ -189,7 +174,9 @@ const ExtractionSettings = ({
         </div>
         <div className="right-column">
           <div className="options-container">
-            <h2>Select an option</h2>
+            <span className="ds-font-default ds-font-emphatized">
+              Choose extraction type
+            </span>
             <div className="choices">
               {choices.map((choice: Choice, index: number) => (
                 <ChoiceInput
@@ -203,7 +190,7 @@ const ExtractionSettings = ({
             </div>
           </div>
           <div className="optimize-container">
-            <span>
+            <span className="ds-font-medium">
               Exclude numbers from extracted text (useful for dates, IDs, etc.)
             </span>
             <div>
@@ -225,10 +212,13 @@ const ExtractionSettings = ({
               opacity: selectedChoice === 3 ? 1 : 0.2,
             }}
           >
-            <h2>Which language to translate?</h2>
+            <span className="ds-font-default ds-font-emphatized">
+              Which language to translate?
+            </span>
             <select
               className="select"
               value={translations}
+              disabled={selectedChoice !== 3}
               onChange={(e) => {
                 setTranslations([e.target.value]);
               }}
@@ -241,7 +231,7 @@ const ExtractionSettings = ({
             {error && <div className="toast-error">{error}</div>}
             {/* <pre id="json-output">{jsonOutput}</pre> */}
             <button
-              id="start-extraction"
+              className="ds-font-default"
               onClick={() => {
                 startExtraction();
               }}
