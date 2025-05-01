@@ -33,6 +33,11 @@ const DownloadJson = ({
       >
         Download JSON
       </button>
+      <div className="footer">
+        <button onClick={() => setStep(0)} className="ds-font-small">
+          Start New Extraction
+        </button>
+      </div>
     </div>
   );
 };

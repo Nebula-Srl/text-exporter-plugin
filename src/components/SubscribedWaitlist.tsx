@@ -1,26 +1,40 @@
-import arrowLeft from "../assets/arrow-left.svg";
 import checkIcon from "../assets/check.svg";
-import TopBar from "./TopBar";
 interface SubscribeWaitlistProps {
   setIsLoading: Function;
   setStep: Function;
+  email: string;
 }
 
-const SubscribeWaitlist = ({
-  setIsLoading,
-  setStep,
-}: SubscribeWaitlistProps) => {
+const SubscribeWaitlist = ({ setStep, email }: SubscribeWaitlistProps) => {
   return (
     <div className="step-3">
-      <TopBar hideManage setStep={setStep} showGoBack />
-
       <div className="content content-center">
-        <img src={checkIcon} height={75} />
-        <h2>You've subscribed to the whitelist</h2>
-        <span>
-          If you will be granted access to the PRO features, you will be
-          notified via email.
+        <img
+          src={checkIcon}
+          height={24}
+          style={{
+            marginBottom: "20px",
+          }}
+        />
+        <span className="ds-font-default ds-font-emphatized">
+          Registration successful!
         </span>
+        <span className="ds-font-small">
+          We've sent an email to <strong>{email}</strong>.<br />
+          Be sure to check your inbox and spam folder for the
+          <br /> access key needed to test the plugin.
+        </span>
+        <button
+          className="ds-font-small"
+          style={{
+            marginTop: "20px",
+          }}
+          onClick={() => {
+            setStep(0);
+          }}
+        >
+          Start with new extraction
+        </button>
       </div>
     </div>
   );

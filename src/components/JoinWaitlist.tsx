@@ -3,9 +3,10 @@ import TopBar from "./TopBar";
 
 interface JoinWaitlistProps {
   setStep: Function;
+  setEmail: Function;
 }
 
-const JoinWaitlist = ({ setStep }: JoinWaitlistProps) => {
+const JoinWaitlist = ({ setStep, setEmail }: JoinWaitlistProps) => {
   const [whitelistForm, setWhitelistForm] = useState({
     fullName: "",
     email: "",
@@ -27,7 +28,7 @@ const JoinWaitlist = ({ setStep }: JoinWaitlistProps) => {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {
+    }).then(async (res) => {
       if (res.status === 200) {
         setStep(5);
         setWhitelistForm({
@@ -36,7 +37,19 @@ const JoinWaitlist = ({ setStep }: JoinWaitlistProps) => {
           role: "",
         });
       } else {
-        alert("An error occurred");
+        const resBody = await res.json();
+        if (!resBody.error) {
+          alert("An error occurred, please try again.");
+          return;
+        }
+        if (resBody.error.response.body.code === "duplicate_parameter") {
+          alert("You are already subscribed to the waitlist");
+          return;
+        }
+        if (resBody.error.response.body.code === "invalid_parameter") {
+          alert("Invalid email");
+          return;
+        }
       }
     });
   };
@@ -87,6 +100,7 @@ const JoinWaitlist = ({ setStep }: JoinWaitlistProps) => {
               value={whitelistForm.email}
               onChange={(e) => {
                 setWhitelistForm({ ...whitelistForm, email: e.target.value });
+                setEmail(e.target.value);
               }}
             />
           </div>

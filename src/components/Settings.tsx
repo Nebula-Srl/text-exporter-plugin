@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import arrowLeft from "../assets/arrow-left.svg";
 import { Storage } from "../storage";
+import TopBar from "./TopBar";
 
 const Settings = ({ setStep }: { setStep: Function }) => {
   const [key, setKey] = useState();
@@ -13,15 +14,12 @@ const Settings = ({ setStep }: { setStep: Function }) => {
   }, []);
   return (
     <div className="settings">
-      <div className="back-header">
-        <div className="back-header-content" onClick={() => setStep(1)}>
-          <img src={arrowLeft} alt="Back" />
-          <span>Go Back</span>
-        </div>
-      </div>
+      <TopBar setStep={setStep} showGoBack hideManage />
       <div className="settings-content">
-        <span className="settings-title">Remove License Key</span>
-        <span className="settings-subtitle">
+        <span className="ds-font-default ds-font-emphatized">
+          Remove License Key
+        </span>
+        <span className="ds-font-default">
           If you no longer need Pro features or want to switch accounts, you can
           safely remove your current license key here.
           <br />
@@ -30,7 +28,7 @@ const Settings = ({ setStep }: { setStep: Function }) => {
         </span>
         <div className="settings-input">
           <div className="input-group">
-            <label htmlFor="key" className="input-label">
+            <label htmlFor="key" className="ds-font-default ds-font-emphatized">
               License Key
             </label>
             <div className="input-wrapper">
@@ -53,7 +51,7 @@ const Settings = ({ setStep }: { setStep: Function }) => {
           </div>
 
           <button
-            className="remove-key"
+            className="remove-key ds-font-default"
             onClick={async () => {
               await Storage.set("user_key", "");
               setStep(0);

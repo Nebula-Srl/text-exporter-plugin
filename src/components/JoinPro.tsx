@@ -1,8 +1,8 @@
 import { useState } from "react";
-
 import joinPro from "../assets/pro.png";
-import arrowLeft from "../assets/arrow-left.svg";
+import { Storage } from "../storage";
 import TopBar from "./TopBar";
+
 interface JoinProProps {
   setIsLoading: Function;
   setStep: Function;
@@ -13,6 +13,7 @@ const JoinPro = ({ setIsLoading, setStep, limitExceed }: JoinProProps) => {
 
   const enableKey = async () => {
     if (!key) return;
+    debugger;
     fetch(import.meta.env.VITE_API_BASE_URL + "/enable-key", {
       method: "POST",
       body: JSON.stringify({ key }),
@@ -21,8 +22,9 @@ const JoinPro = ({ setIsLoading, setStep, limitExceed }: JoinProProps) => {
         origin: "https://figma.com",
       },
     }).then((res) => {
+      debugger;
       if (res.status === 200) {
-        window.localStorage.setItem("user_key", key);
+        Storage.set("user_key", key);
         setStep(1);
         setIsLoading(false);
       } else {
@@ -68,7 +70,7 @@ const JoinPro = ({ setIsLoading, setStep, limitExceed }: JoinProProps) => {
           </div>
         </div>
         <div className="footer">
-          <span className="ds-font-default">Don't have a License Key?</span>
+          <span className="ds-font-small">Don't have a License Key?</span>
           <button
             className="btn-outline"
             onClick={() => {

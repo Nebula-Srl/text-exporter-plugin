@@ -16,6 +16,7 @@ const App = () => {
   const [step, setStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [enhancedResult, setEnhancedResult] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [loaderText, setLoaderText] = useState<string>(
     "Extracting and Translating..."
   );
@@ -66,10 +67,14 @@ const App = () => {
           limitExceed={limitExceed}
         />
       )}
-      {step == 4 && <JoinWaitlist setStep={setStep} />}
+      {step == 4 && <JoinWaitlist setStep={setStep} setEmail={setEmail} />}
 
       {step == 5 && (
-        <SubscribeWaitlist setIsLoading={setIsLoading} setStep={setStep} />
+        <SubscribeWaitlist
+          setIsLoading={setIsLoading}
+          setStep={setStep}
+          email={email}
+        />
       )}
 
       {step == 6 && <Settings setStep={setStep} />}

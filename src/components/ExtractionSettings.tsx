@@ -113,24 +113,41 @@ const ExtractionSettings = ({
             optimize,
             translations,
           }),
-
           method: "POST",
           headers: {
             "x-user-key": String(userKey),
             "x-choice": String(selectedChoice),
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
           },
         }
       );
 
-      if (res.status !== 200) {
-        window.alert("Status - An error occurred, please retry.");
-        setIsLoading(false);
-        return;
+      if (!res.ok || !res.body) {
+        throw new Error("Network response was not ok or body is missing.");
       }
 
-      const resultText = await res.text();
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let resultText: string = "";
+
+      while (true) {
+        const { value, done } = await reader.read();
+
+        if (done) {
+          console.log("Stream finished");
+          break;
+        }
+
+        const chunk = decoder.decode(value, { stream: true });
+        resultText += chunk;
+
+        // Optionally: update UI with partial result
+        console.log("Received chunk:", chunk);
+      }
+
+      // Do something with full result
+      console.log("Full result:", resultText);
+
       const result = JSON.parse(resultText.replace(/^```json|```$/g, ""));
 
       if (!result) {
@@ -145,12 +162,21 @@ const ExtractionSettings = ({
     } catch (e) {
       setStep(1);
       setIsLoading(false);
+      setError("An error occurred while processing your request.");
     }
   };
 
   useEffect(() => {
     if (selectedChoice) setError(null);
   }, [selectedChoice]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
+    }
+  }, [error]);
   return (
     <div
       style={{
@@ -231,7 +257,7 @@ const ExtractionSettings = ({
             {error && <div className="toast-error">{error}</div>}
             {/* <pre id="json-output">{jsonOutput}</pre> */}
             <button
-              className="ds-font-default"
+              className="ds-font-small"
               onClick={() => {
                 startExtraction();
               }}

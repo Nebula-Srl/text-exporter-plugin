@@ -369,12 +369,17 @@ select {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-md);
+  padding: var(--space-sm);
   background: var(--color-black);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 40px;
+}
+
+.step-3 .footer button {
+  width: 93px;
+  white-space: nowrap;
 }
 
 .step-3 .input-container {
@@ -385,6 +390,15 @@ select {
 .step-3 .input-container button {
   background-color: var(--color-pro);
   white-space: nowrap;
+}
+
+.step-3 .content.content-center {
+  background-color: #212121;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 /* Step 4 - Whitelist */
@@ -426,6 +440,10 @@ select {
   justify-content: center;
   align-items: center;
   background: var(--color-dark);
+
+  z-index: 2;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .final-container {
@@ -437,6 +455,18 @@ select {
   gap: var(--space-sm);
   padding: var(--space-sm);
   background: var(--color-dark);
+  position: relative;
+}
+
+.final-container .footer {
+  position: absolute;
+  bottom: 10px;
+}
+
+.final-container .footer button {
+  background: none;
+  color: var(--color-white);
+  text-decoration: underline;
 }
 
 /* Loading States */
@@ -459,6 +489,14 @@ select {
   border-radius: var(--border-radius-lg);
 }
 
+.toast-error {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 90%;
+}
 .limit-exceed {
   text-align: center;
 }
@@ -548,6 +586,47 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* SETTINGS */
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+.settings-content .settings-input {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.settings-content .settings-input .input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+}
+.settings-content .settings-input .input-wrapper {
+  width: 97%;
+  position: relative;
+}
+
+.settings-content .input-wrapper .copy-button {
+  position: absolute;
+  right: 10px;
+  font-size: 9px;
+  padding: var(--space-xxs) var(--space-xxs);
+  height: fit-content;
+  font-weight: 700;
+  background-color: var(--color-grey);
+  transform: translateY(50%);
+}
+
+.settings-content .remove-key {
+  background-color: var(--color-white);
+  white-space: nowrap;
+}
 /* ============================================= */
 /* ANIMATIONS */
 /* ============================================= */
