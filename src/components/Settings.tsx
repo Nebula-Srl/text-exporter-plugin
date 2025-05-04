@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import arrowLeft from "../assets/arrow-left.svg";
 import { Storage } from "../storage";
 import TopBar from "./TopBar";
 
-const Settings = ({ setStep }: { setStep: Function }) => {
+const Settings = ({ goBack }: { goBack: Function }) => {
   const [key, setKey] = useState();
   useEffect(() => {
     const fetchkey = async () => {
@@ -14,7 +13,7 @@ const Settings = ({ setStep }: { setStep: Function }) => {
   }, []);
   return (
     <div className="settings">
-      <TopBar setStep={setStep} showGoBack hideManage />
+      <TopBar goBack={goBack} goToStep={() => {}} showGoBack hideManage />
       <div className="settings-content">
         <span className="ds-font-default ds-font-emphatized">
           Remove License Key
@@ -38,6 +37,7 @@ const Settings = ({ setStep }: { setStep: Function }) => {
                 value={key}
                 readOnly
                 className="license-input"
+                disabled
               />
               <button
                 className="copy-button"
@@ -54,7 +54,7 @@ const Settings = ({ setStep }: { setStep: Function }) => {
             className="remove-key ds-font-default"
             onClick={async () => {
               await Storage.set("user_key", "");
-              setStep(0);
+              goBack();
             }}
           >
             Remove Key

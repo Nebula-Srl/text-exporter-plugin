@@ -2,11 +2,12 @@ import { useState } from "react";
 import TopBar from "./TopBar";
 
 interface JoinWaitlistProps {
-  setStep: Function;
+  goToStep: Function;
+  goBack: Function;
   setEmail: Function;
 }
 
-const JoinWaitlist = ({ setStep, setEmail }: JoinWaitlistProps) => {
+const JoinWaitlist = ({ goToStep, goBack, setEmail }: JoinWaitlistProps) => {
   const [whitelistForm, setWhitelistForm] = useState({
     fullName: "",
     email: "",
@@ -30,7 +31,7 @@ const JoinWaitlist = ({ setStep, setEmail }: JoinWaitlistProps) => {
       },
     }).then(async (res) => {
       if (res.status === 200) {
-        setStep(5);
+        goToStep("activate_key");
         setWhitelistForm({
           fullName: "",
           email: "",
@@ -56,7 +57,7 @@ const JoinWaitlist = ({ setStep, setEmail }: JoinWaitlistProps) => {
 
   return (
     <div className="step-4">
-      <TopBar hideManage setStep={setStep} showGoBack oldStep={3} />
+      <TopBar hideManage goBack={goBack} goToStep={goToStep} showGoBack />
 
       <div className="content">
         <span className="ds-font-default ds-font-emphatized">

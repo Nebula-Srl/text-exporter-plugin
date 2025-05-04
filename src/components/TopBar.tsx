@@ -8,14 +8,14 @@ import { Storage } from "../storage";
 interface TopBarProps {
   showGoBack?: boolean;
   hideManage?: boolean;
-  setStep: Function;
-  oldStep?: number;
+  goBack: Function;
+  goToStep: Function;
 }
 const TopBar = ({
   showGoBack = false,
   hideManage = false,
-  setStep,
-  oldStep = 0,
+  goBack,
+  goToStep,
 }: TopBarProps) => {
   const [key, setKey] = useState();
   useEffect(() => {
@@ -28,7 +28,7 @@ const TopBar = ({
   return (
     <div className="top-bar">
       {showGoBack && (
-        <div className="back-container" onClick={() => setStep(oldStep)}>
+        <div className="back-container" onClick={() => goBack()}>
           <img src={arrowLeft} alt="Back" className="back-icon" />
           <span>Go back</span>
         </div>
@@ -39,11 +39,12 @@ const TopBar = ({
           <button
             className={"btn-gray"}
             onClick={() => {
+              debugger;
               if (key) {
-                setStep(6);
+                goToStep("settings");
                 return;
               }
-              setStep(3);
+              goToStep("join_pro");
             }}
           >
             {key ? "Manage key" : "Activate key"}

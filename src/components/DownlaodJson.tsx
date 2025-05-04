@@ -1,11 +1,12 @@
 interface DownloadJsonProps {
   enhancedResult: BlobPart;
-  setStep: Function;
+  goToStep: Function;
+  goBack: Function;
   setIsLoading: Function;
 }
 const DownloadJson = ({
   enhancedResult,
-  setStep,
+  goToStep,
   setIsLoading,
 }: DownloadJsonProps) => {
   const downloadJson = () => {
@@ -18,7 +19,6 @@ const DownloadJson = ({
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
 
-    setStep(1);
     setIsLoading(false);
   };
   return (
@@ -34,7 +34,10 @@ const DownloadJson = ({
         Download JSON
       </button>
       <div className="footer">
-        <button onClick={() => setStep(0)} className="ds-font-small">
+        <button
+          onClick={() => goToStep("select_artboards")}
+          className="ds-font-small"
+        >
           Start New Extraction
         </button>
       </div>

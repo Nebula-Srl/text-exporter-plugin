@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import selectArtboardImg from "../assets/frame_extractor.png";
 import TopBar from "./TopBar";
 interface SelectArtboardsProps {
-  setStep: Function;
   artworkList: any[];
+  goToStep: Function;
 }
-const SelectArtboards = ({ artworkList, setStep }: SelectArtboardsProps) => {
+const SelectArtboards = ({ artworkList, goToStep }: SelectArtboardsProps) => {
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const SelectArtboards = ({ artworkList, setStep }: SelectArtboardsProps) => {
   }, [artworkList]);
   return (
     <div className="select-artboard">
-      <TopBar setStep={setStep} />
+      <TopBar goToStep={goToStep} goBack={() => {}} />
       <div className="select-artboard__content">
         <img src={selectArtboardImg} width={120} height={120} />
         <div className="info">
@@ -36,7 +36,7 @@ const SelectArtboards = ({ artworkList, setStep }: SelectArtboardsProps) => {
                   setShowError(true);
                   return;
                 }
-                setStep(1);
+                goToStep("extraction_settings");
               }}
             >
               Start now

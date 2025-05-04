@@ -1,11 +1,11 @@
 import checkIcon from "../assets/check.svg";
 interface SubscribeWaitlistProps {
   setIsLoading: Function;
-  setStep: Function;
+  goToStep: Function;
   email: string;
 }
 
-const SubscribeWaitlist = ({ setStep, email }: SubscribeWaitlistProps) => {
+const SubscribeWaitlist = ({ goToStep, email }: SubscribeWaitlistProps) => {
   return (
     <div className="step-3">
       <div className="content content-center">
@@ -30,7 +30,7 @@ const SubscribeWaitlist = ({ setStep, email }: SubscribeWaitlistProps) => {
             marginTop: "20px",
           }}
           onClick={() => {
-            setStep(0);
+            goToStep("select_artboards");
           }}
         >
           Start with new extraction

@@ -364,12 +364,12 @@ select {
   gap: var(--space-sm);
 }
 
-.step-3 .footer {
+.footer {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-sm);
+  padding: var(--space-md) var(--space-md);
   background: var(--color-black);
   display: flex;
   justify-content: space-between;
@@ -377,8 +377,8 @@ select {
   height: 40px;
 }
 
-.step-3 .footer button {
-  width: 93px;
+.footer button {
+  width: 104px;
   white-space: nowrap;
 }
 
@@ -454,12 +454,15 @@ select {
   height: 100%;
   gap: var(--space-sm);
   padding: var(--space-sm);
-  background: var(--color-dark);
+  background: var(--color-black);
   position: relative;
 }
 
 .final-container .footer {
   position: absolute;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
   bottom: 10px;
 }
 
@@ -626,6 +629,43 @@ input:checked + .slider:before {
 .settings-content .remove-key {
   background-color: var(--color-white);
   white-space: nowrap;
+}
+
+.activate-key-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.activate-key-container .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  height: calc(100% - 80px);
+}
+.activate-key-container .content .content__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  text-align: center;
+  padding: 0px var(--space-md);
+}
+
+.activate-key-container .content .content__text .input-container {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
+.activate-key-container .content .content__text .input-container button {
+  background-color: var(--color-white);
+  min-width: 104px;
+  white-space: nowrap;
+}
+
+.license-input {
+  color: var(--color-grey);
 }
 /* ============================================= */
 /* ANIMATIONS */

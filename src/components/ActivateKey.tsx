@@ -1,22 +1,16 @@
-import { useState } from "react";
-import joinPro from "../assets/pro.png";
-import { Storage } from "../storage";
 import TopBar from "./TopBar";
+import activateKeyImg from "../assets/activate-key-img.png";
+import { useState } from "react";
+import { Storage } from "../storage";
 
-interface JoinProProps {
-  setIsLoading: Function;
+interface ActivateKeyProps {
   goToStep: Function;
+  setUserKey: Function;
   goBack: Function;
-  limitExceed?: boolean;
 }
-const JoinPro = ({
-  setIsLoading,
-  goToStep,
-  goBack,
-  limitExceed,
-}: JoinProProps) => {
-  const [key, setKey] = useState("");
 
+const ActivateKey = ({ goToStep, setUserKey, goBack }: ActivateKeyProps) => {
+  const [key, setKey] = useState<string>("");
   const enableKey = async () => {
     if (!key) return;
     debugger;
@@ -28,34 +22,28 @@ const JoinPro = ({
         origin: "https://figma.com",
       },
     }).then((res) => {
-      debugger;
       if (res.status === 200) {
         Storage.set("user_key", key);
-        goToStep('"select_artboards');
-        setIsLoading(false);
+        setUserKey(key);
+        goToStep("select_artboards");
       } else {
         alert("Invalid Key");
       }
     });
   };
   return (
-    <div className="step-3">
-      <TopBar hideManage goBack={goBack} goToStep={goToStep} showGoBack />
+    <div className="activate-key-container">
+      <TopBar hideManage goToStep={goToStep} goBack={goBack} />
+
       <div className="content">
-        <img src={joinPro} width={"100%"} />
+        <img src={activateKeyImg} width={120} />
         <div className="content__text">
-          {limitExceed && (
-            <div className="limit-exceed">
-              The extraction exceeds the 200-line limit of the free plan
-            </div>
-          )}
           <span className="ds-font-default ds-font-emphatized">
-            Enter the Key and access <span className="ds-font-pro">PRO</span>
+            We're currently in beta!
           </span>
-          <span className="ds-font-small" style={{ paddingRight: "30px" }}>
-            With the Pro version, you can extract text from artboards with over
-            200 lines of code and access powerful automatic translation
-            features.
+          <span className="ds-font-default" style={{ paddingRight: "30px" }}>
+            To enable the plugin, please enter your license key or sign up for
+            the waiting list.
           </span>
           <div className="input-container">
             <input
@@ -90,4 +78,5 @@ const JoinPro = ({
     </div>
   );
 };
-export default JoinPro;
+
+export default ActivateKey;

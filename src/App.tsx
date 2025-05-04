@@ -1,4 +1,3 @@
-// Import dotenv
 import { useEffect, useState } from "react";
 import "./assets/css/_variables.css";
 import "./App.css";
@@ -10,17 +9,55 @@ import DownloadJson from "./components/DownlaodJson";
 import SelectArtboards from "./components/SelectArtboards";
 import ExtractionSettings from "./components/ExtractionSettings";
 import Settings from "./components/Settings";
+import { Storage } from "./storage";
+import ActivateKey from "./components/ActivateKey";
+
+type Steps =
+  | "select_artboards"
+  | "extraction_settings"
+  | "download_json"
+  | "join_pro"
+  | "join_waitlist"
+  | "subscribe_waitlist"
+  | "settings";
+
 const App = () => {
+  const [userKey, setUserKey] = useState<string | null>(null);
   const [artworkList, setArtworkList] = useState([]);
   const [jsonOutput, setJsonOutput] = useState("Waiting for data...");
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<Steps>("select_artboards");
+  const [_stepHistory, setStepHistory] = useState<Steps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [enhancedResult, setEnhancedResult] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [loaderText, setLoaderText] = useState<string>(
-    "Extracting and Translating..."
+    "Starting extraction..."
   );
   const [limitExceed, setLimitExceed] = useState(false);
+
+  useEffect(() => {
+    const loadUserKey = async () => {
+      const key = await Storage.get("user_key");
+      setUserKey(key);
+    };
+    loadUserKey();
+  }, [Storage.get("user_key"), Storage, userKey]);
+
+  // Navigate forward, storing current step in history
+  const goToStep = (newStep: Steps) => {
+    setStepHistory((prev) => [...prev, step]);
+    setStep(newStep);
+  };
+
+  // Navigate backward
+  const goBack = () => {
+    setStepHistory((prev) => {
+      if (prev.length === 0) return prev;
+      const lastStep = prev[prev.length - 1];
+      setStep(lastStep);
+      return prev.slice(0, -1); // pop last
+    });
+  };
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -36,48 +73,82 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) {
+      setLoaderText("Starting extraction...");
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (isLoading) {
+        setLoaderText((prev) => {
+          if (prev === "Starting extraction...") {
+            return "Selecting text from artboards...";
+          } else if (prev === "Selecting text from artboards...") {
+            return "Elaborating extraction...";
+          } else if (prev === "Elaborating extraction...") {
+            return "Organizing data in JSON format...";
+          } else {
+            return "Extracting...";
+          }
+        });
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isLoading]);
+  if (!userKey && step !== "join_waitlist") {
+    return (
+      <ActivateKey
+        goToStep={goToStep}
+        goBack={goBack}
+        setUserKey={setUserKey}
+      />
+    );
+  }
   return (
     <>
       {isLoading && <Loader text={loaderText} />}
-      {step == 0 && (
-        <SelectArtboards artworkList={artworkList} setStep={setStep} />
+      {step === "select_artboards" && (
+        <SelectArtboards artworkList={artworkList} goToStep={goToStep} />
       )}
-      {step == 1 && (
+      {step === "extraction_settings" && (
         <ExtractionSettings
           artworkList={artworkList}
-          setLoaderText={setLoaderText}
           setIsLoading={setIsLoading}
-          setStep={setStep}
+          goToStep={goToStep}
+          goBack={goBack}
           jsonOutput={jsonOutput}
           setEnhancedResult={setEnhancedResult}
           setLimitExceed={setLimitExceed}
         />
       )}
-      {step == 2 && (
+      {step === "download_json" && (
         <DownloadJson
           enhancedResult={enhancedResult}
-          setStep={setStep}
+          goToStep={goToStep}
+          goBack={goBack}
           setIsLoading={setIsLoading}
         />
       )}
-      {step == 3 && (
+      {step === "join_pro" && (
         <JoinPro
+          goToStep={goToStep}
+          goBack={goBack}
           setIsLoading={setIsLoading}
-          setStep={setStep}
           limitExceed={limitExceed}
         />
       )}
-      {step == 4 && <JoinWaitlist setStep={setStep} setEmail={setEmail} />}
-
-      {step == 5 && (
+      {step === "join_waitlist" && (
+        <JoinWaitlist goToStep={goToStep} goBack={goBack} setEmail={setEmail} />
+      )}
+      {step === "subscribe_waitlist" && (
         <SubscribeWaitlist
+          goToStep={goToStep}
           setIsLoading={setIsLoading}
-          setStep={setStep}
           email={email}
         />
       )}
-
-      {step == 6 && <Settings setStep={setStep} />}
+      {step === "settings" && <Settings goBack={goBack} />}
     </>
   );
 };

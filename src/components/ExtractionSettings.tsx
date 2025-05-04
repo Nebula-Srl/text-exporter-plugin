@@ -5,12 +5,12 @@ import artboardIcon from "../assets/artboard.svg";
 import TopBar from "./TopBar";
 interface ExtractionSettingsProps {
   artworkList: any[];
-  setLoaderText: Function;
   setIsLoading: Function;
-  setStep: Function;
   jsonOutput: string;
   setEnhancedResult: Function;
   setLimitExceed: Function;
+  goBack: Function;
+  goToStep: Function;
 }
 const choices = [
   {
@@ -34,12 +34,12 @@ const choices = [
 ];
 const ExtractionSettings = ({
   artworkList,
-  setLoaderText,
   setIsLoading,
-  setStep,
   jsonOutput,
   setEnhancedResult,
   setLimitExceed,
+  goToStep,
+  goBack,
 }: ExtractionSettingsProps) => {
   const [selectedChoice, setSelectedChoice] = useState(0);
   const [optimize, setOptimize] = useState(false);
@@ -83,13 +83,10 @@ const ExtractionSettings = ({
       setError("Select at least one frame to extract");
       return;
     }
-    setLoaderText(
-      selectedChoice === 1 ? "Extracting..." : "Extracting and Translating..."
-    );
     setIsLoading(true);
 
     if (!userKey && selectedChoice !== 1) {
-      setStep(3);
+      goToStep("join_pro");
       setIsLoading(false);
       return;
     }
@@ -98,7 +95,7 @@ const ExtractionSettings = ({
       // Count the number of keys in the jsonOutput
       let keysCount = countKeys(JSON.parse(jsonOutput));
       if (keysCount > 50) {
-        setStep(3);
+        goToStep("join_pro");
         setLimitExceed(true);
         setIsLoading(false);
         return;
@@ -157,10 +154,10 @@ const ExtractionSettings = ({
       }
 
       setEnhancedResult(result);
-      setStep(2);
+      goToStep("download_json");
       setIsLoading(false);
     } catch (e) {
-      setStep(1);
+      goToStep("select_artboards");
       setIsLoading(false);
       setError("An error occurred while processing your request.");
     }
@@ -183,7 +180,7 @@ const ExtractionSettings = ({
         minHeight: "100%",
       }}
     >
-      <TopBar setStep={setStep} showGoBack />
+      <TopBar showGoBack goBack={goBack} goToStep={goToStep} />
       <div className="extraction-settings">
         <div className="left-column">
           <span className="ds-font-default ds-font-emphatized">
