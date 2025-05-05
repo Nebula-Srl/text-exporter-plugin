@@ -30,10 +30,10 @@ const SubscribeWaitlist = ({ goToStep, email }: SubscribeWaitlistProps) => {
             marginTop: "20px",
           }}
           onClick={() => {
-            goToStep("select_artboards");
+            goToStep("activate_key");
           }}
         >
-          Start with new extraction
+          Activate Key
         </button>
       </div>
     </div>

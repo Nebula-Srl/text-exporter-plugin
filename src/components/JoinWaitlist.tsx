@@ -31,7 +31,7 @@ const JoinWaitlist = ({ goToStep, goBack, setEmail }: JoinWaitlistProps) => {
       },
     }).then(async (res) => {
       if (res.status === 200) {
-        goToStep("activate_key");
+        goToStep("subscribe_waitlist");
         setWhitelistForm({
           fullName: "",
           email: "",

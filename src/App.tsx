@@ -96,7 +96,7 @@ const App = () => {
     }, 2000);
     return () => clearInterval(interval);
   }, [isLoading]);
-  if (!userKey && step !== "join_waitlist") {
+  if (!userKey && step !== "join_waitlist" && step !== "subscribe_waitlist") {
     return (
       <ActivateKey
         goToStep={goToStep}
